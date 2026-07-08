@@ -12,6 +12,7 @@ from sklearn.decomposition import PCA
 import warnings
 warnings.filterwarnings("ignore")
 
+
 # --- Page Configuration ---
 st.set_page_config(page_title="Superstore Analytics", layout="wide")
 st.sidebar.title("Navigation")
@@ -19,10 +20,14 @@ page = st.sidebar.radio("Go to:", ["Overview Dashboard", "Forecast Explorer", "A
 
 # --- Data Loading & Preprocessing ---
 @st.cache_data
+@st.cache_data
 def load_data():
-    # Load and clean data (combining Task 1 & 2 logic)
+    # Load and clean data
     df = pd.read_csv("train.csv")
-    df['Order Date'] = pd.to_datetime(df['Order Date'], format="%m/%d/%Y")
+    
+    # REMOVED the strict format parameter so pandas can auto-detect mixed date formats
+    df['Order Date'] = pd.to_datetime(df['Order Date'])
+    
     df['Year'] = df['Order Date'].dt.year
     df['Month'] = df['Order Date'].dt.month
     
