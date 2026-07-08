@@ -50,9 +50,9 @@ def load_vg_data():
 
 df = load_data()
 
-# ==========================================
+
 # PAGE 1: OVERVIEW DASHBOARD
-# ==========================================
+
 if page == "Overview Dashboard":
     st.title("Sales Overview Dashboard")
     
@@ -96,9 +96,7 @@ if page == "Overview Dashboard":
         ax3.set_title(f"{selected_category} Sales Trend in {selected_region}")
         st.pyplot(fig3)
 
-# ==========================================
 # PAGE 2: FORECAST EXPLORER (XGBoost)
-# ==========================================
 elif page == "Forecast Explorer":
     st.title("Forecast Explorer (XGBoost)")
     
@@ -171,9 +169,8 @@ elif page == "Forecast Explorer":
     mcol1.metric("Mean Absolute Error (MAE)", f"${mae:,.2f}")
     mcol2.metric("Root Mean Squared Error (RMSE)", f"${rmse:,.2f}")
 
-# ==========================================
 # PAGE 3: MULTI-SOURCE ANOMALY REPORT
-# ==========================================
+
 elif page == "Anomaly Report":
     st.title("Macro-Anomaly Report")
     st.markdown("Using Isolation Forest on supplementary global video game data to detect multi-variate market outliers.")
@@ -205,9 +202,8 @@ elif page == "Anomaly Report":
     display_df['Global_Sales'] = display_df['Global_Sales'].apply(lambda x: f"{x:,.2f}M")
     st.dataframe(display_df.reset_index(drop=True), use_container_width=True)
 
-# ==========================================
 # PAGE 4: DEMAND SEGMENTS
-# ==========================================
+
 elif page == "Demand Segments":
     st.title("Product Demand Segments")
     
@@ -233,7 +229,7 @@ elif page == "Demand Segments":
     
     # for i, txt in enumerate(cluster_df.index):
     #     ax.annotate(txt, (cluster_df['PCA1'][i]+0.1, cluster_df['PCA2'][i]+0.1), fontsize=9
-    # Change the square brackets [i] to .iloc[i] to use integer positioning
+   
     for i, txt in enumerate(cluster_df.index):
         ax.annotate(txt, (cluster_df['PCA1'].iloc[i] + 0.1, cluster_df['PCA2'].iloc[i] + 0.1), fontsize=9)
         
