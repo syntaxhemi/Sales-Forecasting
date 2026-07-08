@@ -54,7 +54,7 @@ df = load_data()
 # PAGE 1: OVERVIEW DASHBOARD
 # ==========================================
 if page == "Overview Dashboard":
-    st.title("📊 Sales Overview Dashboard")
+    st.title("Sales Overview Dashboard")
     
     col1, col2 = st.columns(2)
     
@@ -100,7 +100,7 @@ if page == "Overview Dashboard":
 # PAGE 2: FORECAST EXPLORER (XGBoost)
 # ==========================================
 elif page == "Forecast Explorer":
-    st.title("📈 Forecast Explorer (XGBoost)")
+    st.title("Forecast Explorer (XGBoost)")
     
     # Controls
     col1, col2 = st.columns(2)
@@ -175,7 +175,7 @@ elif page == "Forecast Explorer":
 # PAGE 3: MULTI-SOURCE ANOMALY REPORT
 # ==========================================
 elif page == "Anomaly Report":
-    st.title("🚨 Macro-Anomaly Report")
+    st.title("Macro-Anomaly Report")
     st.markdown("Using Isolation Forest on supplementary global video game data to detect multi-variate market outliers.")
     
     vg_df = load_vg_data()
@@ -209,7 +209,7 @@ elif page == "Anomaly Report":
 # PAGE 4: DEMAND SEGMENTS
 # ==========================================
 elif page == "Demand Segments":
-    st.title("📦 Product Demand Segments")
+    st.title("Product Demand Segments")
     
     # Aggregate Sub-Category Features
     total_sales = df.groupby('Sub-Category')['Sales'].sum().rename('Total_Sales')
@@ -231,8 +231,11 @@ elif page == "Demand Segments":
     fig, ax = plt.subplots(figsize=(10, 6))
     scatter = ax.scatter(cluster_df['PCA1'], cluster_df['PCA2'], c=cluster_df['Cluster'], cmap='viridis', s=100)
     
+    # for i, txt in enumerate(cluster_df.index):
+    #     ax.annotate(txt, (cluster_df['PCA1'][i]+0.1, cluster_df['PCA2'][i]+0.1), fontsize=9
+    # Change the square brackets [i] to .iloc[i] to use integer positioning
     for i, txt in enumerate(cluster_df.index):
-        ax.annotate(txt, (cluster_df['PCA1'][i]+0.1, cluster_df['PCA2'][i]+0.1), fontsize=9)
+        ax.annotate(txt, (cluster_df['PCA1'].iloc[i] + 0.1, cluster_df['PCA2'].iloc[i] + 0.1), fontsize=9)
         
     ax.set_title("K-Means Product Segmentation (PCA Reduced)")
     st.pyplot(fig)
