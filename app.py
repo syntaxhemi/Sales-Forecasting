@@ -20,13 +20,16 @@ page = st.sidebar.radio("Go to:", ["Overview Dashboard", "Forecast Explorer", "A
 
 # --- Data Loading & Preprocessing ---
 @st.cache_data
-@st.cache_data
+# @st.cache_data
 def load_data():
-    # Load and clean data
+    # Load data
     df = pd.read_csv("train.csv")
     
-    # REMOVED the strict format parameter so pandas can auto-detect mixed date formats
-    df['Order Date'] = pd.to_datetime(df['Order Date'])
+    # 1. 'coerce' forces completely broken dates to become NaT (Not a Time) instead of crashing
+    df['Order Date'] = pd.to_datetime(df['Order Date'], errors='coerce')
+    
+    # 2. Drop the rows where the date was completely unreadable
+    df = df.dropna(subset=['Order Date'])
     
     df['Year'] = df['Order Date'].dt.year
     df['Month'] = df['Order Date'].dt.month
@@ -37,7 +40,6 @@ def load_data():
     df['Postal Code'] = df['Postal Code'].apply(lambda x: x.zfill(5))
     
     return df
-
 @st.cache_data
 def load_vg_data():
     # Load supplementary video game data for multi-source anomaly detection
